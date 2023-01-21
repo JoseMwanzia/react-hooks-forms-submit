@@ -12,12 +12,50 @@ function Form(props) {
     setLastName(event.target.value);
   }
 
+  function handleSubmit(event) {
+    event.preventDefault();
+    const formData = {
+      firstName: firstName,
+      lastName: lastName,
+    };
+    const dataArray = [...SubmittedData, formData];
+    setSubmittedData(dataArray);
+    setFirstName("");
+    setLastName("");
+  }
+    // props.sendFormDataSomewhere(formData);
+    // setFirstName("")
+    // setLastName("")
+
+  // }
+
+const listOfSubmissions = submittedData.map((data, index) => {
   return (
-    <form>
+    <div key={index}>
+        {data.firstName} {data.lastName}
+    </div>
+  );
+});
+
+  return (
+    <div>
+      <form onSubmit={handleSubmit}>
       <input type="text" onChange={handleFirstNameChange} value={firstName} />
       <input type="text" onChange={handleLastNameChange} value={lastName} />
       <button type="submit">Submit</button>
     </form>
+
+    {error.length > 0
+      ? errors.map((error, index) => (
+        <p key={index} style={{ color: "red" }}>
+          {error}
+        </p>
+      ))
+      : null}
+      <h3>Submissions</h3>
+      {listOfSubmissions}
+    </div>
+
   );
 }
 
